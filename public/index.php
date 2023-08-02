@@ -19,6 +19,9 @@ Container::bind(\Core\Request::class);
 // Инициализация контейнера и автоматическая регистрация контроллеров
 Container::autoloadControllers(__DIR__ . '/../App/Controllers');
 
+// Вызываем метод setCorsHeaders для установки заголовков CORS перед отправкой ответа
+Container::make(\Core\Request::class)->setCorsHeaders();
+
 // Создаем экземпляр маршрутизатора FastRoute
 $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
     // Добавляем маршруты с параметрами

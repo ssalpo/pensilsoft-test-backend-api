@@ -80,5 +80,23 @@ class Request
     {
         return $_GET[$key] ?? $default;
     }
+
+    /**
+     * Устанавливает необходимые заголовки CORS для ответа.
+     */
+    public function setCorsHeaders()
+    {
+        header('Access-Control-Allow-Origin: *'); // Разрешаем запросы с любых доменов (можно указать конкретный домен)
+        header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS'); // Разрешаем различные методы запросов
+        header('Access-Control-Allow-Headers: Content-Type, Authorization'); // Разрешаем указанные заголовки
+        header('Access-Control-Max-Age: 86400'); // Задаем время кэширования предварительных запросов (preflight) на 24 часа
+        header('Access-Control-Allow-Credentials: true'); // Разрешаем передачу куки и авторизационных данных между источниками (если необходимо)
+
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+            // Если это предварительный запрос, возвращаем пустой ответ с кодом 200
+            http_response_code(200);
+            exit();
+        }
+    }
 }
 
